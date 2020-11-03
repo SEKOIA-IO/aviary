@@ -9,10 +9,11 @@ import time
 
 class KubernetesInterface:
     def __init__(self, namespace="default"):
+        # try to use in-cluster config, otherwise tries minikube for local dev
         try:
             config.load_incluster_config()
         except ConfigException:
-            config.load_kube_config(context="test-sekoia-io")
+            config.load_kube_config(context="minikube")
         self.namespace = namespace
 
     def getDeploy(self, deployment_name: str):
