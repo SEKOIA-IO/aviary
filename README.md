@@ -1,12 +1,12 @@
-# Aviary
+# Aviary 🦜
 
 This is a progressive canary rollout controller for Kubernetes. It was developed to make deployments safer at [SEKOIA.IO](https://sekoia.io/).
 
-## Logic
+## 🔀 Logic
 
 ![flowchart of aviary](control-loop.png)
 
-## Usage
+## 📖 Usage
 
 1. Adapt the configuration to the services you want to deploy using Aviary, in `resources/kubernetes/config.yaml`
 
@@ -41,7 +41,7 @@ On startup, the `-primary` and `-canary` deployments will be created from the ba
 
 Container image changes will be deployed progressively following the flowchart shown above.
 
-## Operations
+## 🧰 Operations
 
 For some reason, you might want to bypass a canary deployment or abort an ongoing one. Aviary features an admin console that can be accessed by using `kubectl exec` on `cli.sh` in the pod, or simply connecting to port 8888 of the pod with `netcat` and `kubectl port-forward`.
 
