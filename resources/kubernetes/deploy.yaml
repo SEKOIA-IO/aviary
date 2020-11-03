@@ -1,0 +1,47 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+    io.sekoia.microservice: aviary
+  name: aviary
+  labels:
+    app: aviary
+    type: intake
+    service: aviary
+spec:
+  revisionHistoryLimit: 4
+  selector:
+    matchLabels:
+      app: aviary
+  template:
+    metadata:
+      name: aviary
+      labels:
+        app: aviary
+        service: aviary
+    spec:
+      serviceAccountName: aviary
+      volumes:
+      - name: config
+        configMap:
+          name: aviary
+          items:
+          - mode: 0555
+            key: canaries.yaml
+            path: canaries.yaml
+      containers:
+      - name: aviary
+        image: sekoiaio/aviary:1.0
+        envFrom:
+        - configMapRef:
+            name: aviary
+        volumeMounts:
+        - name: config
+          mountPath: /app/config/
+        resources:
+          limits:
+            memory: "500Mi"
+            cpu: "100m"
+          requests:
+            memory: "500Mi"
+            cpu: "100m"

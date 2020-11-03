@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aviary-tester
+  labels:
+    app: aviary-tester
+spec:
+  selector:
+    matchLabels:
+      app: aviary-tester
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+      labels:
+        app: aviary-tester
+    spec:
+      containers:
+      - name: aviary-tester
+        image: sekoialab/aviary-tester:latest
+        args: ["python", "-u", "dummy.py", "fail-in-metrics"]

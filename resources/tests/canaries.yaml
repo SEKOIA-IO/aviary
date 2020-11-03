@@ -1,0 +1,11 @@
+prometheus-base-url: https://dashboard.test.sekoia.io/prometheus
+namespace: sic
+aviary-tester:
+  breakpoint: 50%
+  step: 4%
+  abort: 120s
+  max_step_duration: 45s
+  check_success_step_duration: 14s
+  check_max_failures: 3
+  success:
+    - expr: aviary_tester_failures_total{kubernetes_pod_name="<<pod>>"} == 0

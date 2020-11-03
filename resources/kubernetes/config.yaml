@@ -1,0 +1,22 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: aviary
+data:
+
+  canaries.yaml: |
+    prometheus-base-url: http://myprometheus:9090/
+    namespace: default
+
+    my-service-deployment:
+      breakpoint: 50%
+      step: 10%
+      abort: 120s
+      max_step_duration: 600s
+      check_max_failures: 4
+      check_success_step_duration: 120s
+      start_delay: 60s
+      success:
+        - expr: rate(my_service_performance{kubernetes_pod_name="<<pod>>"}[1m]) > 500
+        - expr: my_service_error_total{kubernetes_pod_name="<<pod>>"} == 0
+
